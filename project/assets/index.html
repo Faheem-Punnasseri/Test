@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+
+        .img-magnifier-container {
+            position: relative;
+            /*top: 50%;
+    left: 50%;*/
+        }
+
+        .img-magnifier-glass {
+            position: absolute;
+            border: 3px solid #ff0f0f;
+            /*border-radius: 50%;*/
+            cursor: none;
+            /*Set the size of the magnifier glass:*/
+            width: 200px;
+            height: 100px;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+
+        /*modal related*/
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #myimage {
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+    </style>
+    <script>
+        function magnify(imgID, zoom) {
+            //$('#myImg').hide();
+            var img, glass, w, h, bw;
+            img = document.getElementById(imgID);
+            /*create magnifier glass:*/
+            glass = document.createElement("DIV");
+            glass.setAttribute("class", "img-magnifier-glass");
+
+            /*insert magnifier glass:*/
+            img.parentElement.insertBefore(glass, img);
+            /*set background properties for the magnifier glass:*/
+            glass.style.backgroundImage = "url('" + img.src + "')";
+            glass.style.backgroundRepeat = "no-repeat";
+            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+            //glass.style.alignItems = "center";
+            bw = 3;
+            w = glass.offsetWidth / 2;
+            h = glass.offsetHeight / 2;
+            //console.log(img.width + "offsetWidth == offsetHeight" + img.height);
+
+            /*execute a function when someone moves the magnifier glass over the image:*/
+            glass.addEventListener("mousemove", moveMagnifier);
+            img.addEventListener("mousemove", moveMagnifier);
+            /*and also for touch screens:*/
+            glass.addEventListener("touchmove", moveMagnifier);
+            img.addEventListener("touchmove", moveMagnifier);
+
+            function moveMagnifier(e) {
+                var pos, x, y;
+                /*prevent any other actions that may occur when moving over the image*/
+                e.preventDefault();
+                /*get the cursor's x and y positions:*/
+                pos = getCursorPos(e);
+                x = pos.x;
+                y = pos.y;
+                //console.log(pos.x + "== " +  pos.y);
+                /*prevent the magnifier glass from being positioned outside the image:*/
+                if (x > img.width - (w / zoom)) {
+                    x = img.width - (w / zoom);
+                }
+                if (x < w / zoom) {
+                    x = w / zoom;
+                }
+                if (y > img.height - (h / zoom)) {
+                    y = img.height - (h / zoom);
+                }
+                if (y < h / zoom) {
+                    y = h / zoom;
+                }
+                //console.log(zoom + "= zoom ");
+
+                /*set the position of the magnifier glass:*/
+                //glass.style.left = (x - w) + "px";
+                glass.style.left = (x - w) + "px";
+                //glass.style.left = (x - w) + "px";
+                glass.style.top = (y - h + 5) + "px";
+                /*display what the magnifier glass "sees":*/
+                glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+                p = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+                //console.log("backgroundPositionp" + p);
+                console.log("imgID = >" + imgID + "zoom => " + zoom);
+
+            }
+
+            function getCursorPos(e) {
+                var a, x = 0,
+                    y = 0;
+                e = e || window.event;
+                /*get the x and y positions of the image:*/
+                a = img.getBoundingClientRect();
+                /*calculate the cursor's x and y coordinates, relative to the image:*/
+                x = e.pageX - a.left;
+                y = e.pageY - a.top;
+                /*consider any page scrolling:*/
+                x = x - window.pageXOffset;
+                y = y - window.pageYOffset;
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+
+    <!--<h1>Image Magnifier Glass</h1>
+
+<p>Move the magnifier using mouse and click on specific area to know more.</p>-->
+
+    <div class="img-magnifier-container">
+        <img id="myimage" src="fi_4_7/fi_4_7.jpg" width="704px" height="560px">
+        <!--<img id="myImg" src="image/image01.jpg" alt="Snow" style="width:100%;max-width:300px">-->
+        <!--<map name="Map">
+  <area shape="poly" coords="251,74,302,73,302,102,291,121,292,199,261,197,268,163,262,113,249,101,247,79"  alt="piston" href="www.google.com" />
+  </map>-->
+    </div>
+
+    <!--<p>Feel free to change the strength of the magnifier glass when initiating the magnify function.</p>-->
+
+    <script>
+        /* Initiate Magnify Function
+                                                                                                                                                                                                                                                                                                                                                                                                                                    with the id of the image, and the strength of the magnifier glass:*/
+        magnify("myimage", 1.4);
+    </script>
+
+</body>
+
+</html>

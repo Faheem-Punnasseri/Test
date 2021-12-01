@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+	<title></title>
+
+	<script type="text/javascript" charset="utf-8" src="common/res/lib/edge_includes/edge.6.0.0.min.js"></script>
+	<script language="javascript" src="common/res/lib/jquery/jquery-1.5.js"></script>
+	<script language="javascript" src="common/res/lib/jquery/jquery-ui.js"></script>
+
+
+	<style>
+		@charset "utf-8";
+
+		.edgeLoad-EDGE-429626494 {
+			visibility: hidden;
+		}
+
+		body {
+			background-color: #FFFFFF;
+			-webkit-touch-callout: none;
+			/* iOS Safari */
+			-webkit-user-select: none;
+			/* Chrome/Safari/Opera */
+			-khtml-user-select: none;
+			/* Konqueror */
+			-moz-user-select: none;
+			/* Firefox */
+			-ms-user-select: none;
+			/* Internet Explorer/Edge */
+		}
+
+		html {
+			overflow: hidden;
+			-webkit-touch-callout: none;
+			/* iOS Safari */
+			-webkit-user-select: none;
+			/* Chrome/Safari/Opera */
+			-khtml-user-select: none;
+			/* Konqueror */
+			-moz-user-select: none;
+			/* Firefox */
+			-ms-user-select: none;
+			/* Internet Explorer/Edge */
+		}
+
+		#ExternalFile {
+			position: absolute;
+			background-color: #FFFFFF;
+
+			width: 710px;
+			height: 560px;
+			top: 0px;
+			left: 0px;
+		}
+
+		#starterPreloader {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			opacity: 0;
+		}
+
+		#starterPreloaderImg {
+			position: absolute;
+			background-image: url("../../../../../../common/svg/preloader/_preloader.gif");
+			background-repeat: no-repeat;
+			width: 64px;
+			height: 64px;
+			left: 323px;
+			top: 248px;
+			background-size: 500px;
+			opacity: 0.5;
+		}
+
+		#starterPreloaderBG {
+			position: absolute;
+			background-color: #FFFFFF;
+			width: 64px;
+			height: 64px;
+			left: 323px;
+			top: 248px;
+			opacity: 0;
+		}
+
+		#starterPreloader_fadeBG {
+			position: absolute;
+			width: 64px;
+			height: 64px;
+			left: 323px;
+			top: 248px;
+			opacity: 0.7;
+		}
+	</style>
+
+</head>
+
+<body style="margin:0;padding:0;">
+	<div id="Stage" class="EDGE-429626494">
+
+		<div id="ExternalFile">
+			<iframe id="Load_Mc" scrolling="no" allowtransparency="true" frameborder="0" width="710px" height="560px">
+			</iframe>
+		</div>
+
+		<div id="starterPreloader">
+			<div id="starterPreloaderBG"> </div>
+			<div id="starterPreloader_fadeBG"> </div>
+			<div id="starterPreloaderImg"> </div>
+		</div>
+
+	</div> <!-- stage end -->
+
+	<script>
+		AdobeEdge.loadComposition('assets/template', 'EDGE-429626494', {
+			scaleToFit: "both",
+			centerStage: "both",
+			minW: "0px",
+			maxW: "undefined",
+			width: "710px",
+			height: "560px"
+		}, { dom: [] }, { dom: [] });
+
+		// Lock keyboard up,down,left,right, pagedown and pageup 
+		window.addEventListener("keydown", function (e) {
+			// space and arrow keys
+			//console.log(">>>>>>>>   "+e.keyCode);
+			if ([33, 34, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+				e.preventDefault();
+			}
+		}, false);
+
+
+		//lock mousewheel
+		$('body').mousedown(function (e) {
+			if ((e.button === 1) || (e.button === 2)) {
+				e.preventDefault();
+				return false;
+			}
+
+			if (e.which == 2) {
+				e.preventDefault();
+			}
+		});
+
+
+		//lock right click
+		document.addEventListener("contextmenu", function (e) {
+			e.preventDefault();
+		}, false);
+
+
+		$(window).load(function () { });
+
+		$(document).ready(function () {
+			show_starterPreloader();
+			//hide_starterPreloader();
+			callIndex();
+		});
+
+
+		function callIndex() {
+			document.title = "index";
+			$("#Load_Mc").attr('src', "assets/index.html");
+		}
+
+		function show_starterPreloader() {
+			$("#starterPreloader").show();
+			$("#starterPreloader").css({ "opacity": "1" });
+		}
+
+		$(window).load(function () {
+			hide_starterPreloader();
+		});
+
+		function hide_starterPreloader() {
+			//console.log("hide");
+			$("#starterPreloader").hide();
+		}
+
+
+	</script>
+
+
+</body>
+
+</html>
